@@ -7,9 +7,9 @@ class UserCreationForm(forms.Form):
     age = forms.CharField(label = "Age")
     def save(self, commit=True) -> users.djangoUser:
         user = users.djangoUser(None)
-        user.saveNewUser(pwd=self.newPWD, name=self.userName)
+        token = user.saveNewUser(pwd=self.newPWD, name=self.userName)
         user.setData("Age", self.age)
-        return user
+        return token, user.id
 
 class LoginForm(forms.Form):
     userName = forms.CharField(label = "User Name")
@@ -17,8 +17,8 @@ class LoginForm(forms.Form):
     totp = forms.IntegerField(label = "TOTP")
     def save(self, commit=True) -> users.djangoUser:
         user = users.djangoUser(self.userName)
-        user.login(pwd=self.password, mfaToken=str(self.totp))
-        return user
+        token = user.login(pwd=self.password, mfaToken=str(self.totp))
+        return token, user.id
 
 class PasswordResetForm(forms.Form):
     pass

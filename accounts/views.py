@@ -5,21 +5,27 @@ from django.shortcuts import render
 import forms
 from django.urls import reverse_lazy
 from django.views import generic
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.http.response import HttpResponse
+from django.http.request import HttpRequest
 
 
-class SignUpView(generic.CreateView):
-    form_class = forms.UserCreationForm
-    success_url = reverse_lazy("login")
-    template_name = "registration/signup.html"
+def SignUpView(request: HttpRequest):
+    if request.method == "GET":
+        return render(request, 'registration/signup.html', {'form': forms.UserCreationForm})
+    form = forms.UserCreationForm(request.POST)
+    token, Uid = form.save()
+    response = redirect("/")
+    response.set_cookie("_KryptonUserID", )
+    response.set_cookie("_KryptonSessionToke", token, 15*60)
+    return response
 
-
-class PasswordReset(generic.CreateView):
-    form_class = forms.PasswordResetForm
-    success_url = reverse_lazy("login")
-    template_name = "registration/reset.html"
-
-class Login(generic.CreateView):
-    form_class = forms.LoginForm
-    success_url = reverse_lazy("/")
-    template_name = "registration/login.html"
+def LoginView(request: HttpRequest):
+    if request.method == "GET":
+        return render(request, 'registration/login.html', {'form': forms.LoginForm})
+    form = forms.LoginForm(request.POST)
+    token, Uid = form.save()
+    response = redirect("/")
+    response.set_cookie("_KryptonUserID")
+    response.set_cookie("_KryptonSessionToke", token, 15*60)
+    return response
