@@ -3,9 +3,9 @@ from django.shortcuts import render
 # Create your views here.
 # accounts/views.py
 import forms
-from django.urls import reverse_lazy
 from django.views import generic
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponse
 from django.http.request import HttpRequest
 
@@ -29,3 +29,7 @@ def LoginView(request: HttpRequest):
     response.set_cookie("_KryptonUserID")
     response.set_cookie("_KryptonSessionToke", token, 15*60)
     return response
+
+@login_required
+def RecoveryCodeView(request: HttpRequest):
+    return render(request, "register/resetEnable.html", {'codes': request.user.enablePWDReset()})

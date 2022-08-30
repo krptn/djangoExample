@@ -1,0 +1,11 @@
+<!-- templates/registration/signup.html -->
+{% extends "base.html" %}
+
+{% block title %}Enable Reset% endblock %}
+
+{% block content %}
+    <h1>Get recovery codes</h1>
+    {% for code in codes%}
+        <p>{{ code }}</p>
+    {% endfor %}
+{% endblock %}
