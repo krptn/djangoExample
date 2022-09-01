@@ -1,19 +1,19 @@
 from django import forms
-from krypton.auth.users.django import users
+from krypton.auth.django import users
 
 class UserCreationForm(forms.Form):
-    newPWD = forms.PasswordInput(label = "Password")
+    Password = forms.CharField(widget=forms.PasswordInput)
     userName = forms.CharField(label = "User Name")
     age = forms.CharField(label = "Age")
-    def save(self, commit=True) :
+    def save(self, commit=True):
         user = users.djangoUser(None)
-        token = user.saveNewUser(pwd=self.newPWD, name=self.userName)
+        token = user.saveNewUser(pwd=self.Password, name=self.userName)
         user.setData("Age", self.age)
         return token, user.id
 
 class LoginForm(forms.Form):
     userName = forms.CharField(label = "User Name")
-    password = forms.PasswordInput(label = "Password")
+    password = forms.CharField(widget=forms.PasswordInput)
     totp = forms.IntegerField(label = "TOTP")
     def save(self, commit=True):
         user = users.djangoUser(self.userName)
@@ -23,8 +23,8 @@ class LoginForm(forms.Form):
 class PasswordResetForm(forms.Form):
     userName = forms.CharField(label = "User Name")
     otp = forms.IntegerField(label = "OTP")
-    newPWD = forms.PasswordInput(label = "New Password")
+    NewPassword = forms.CharField(widget=forms.PasswordInput)
     def save(self, commit=True):
         user = users.djangoUser(self.userName)
-        token = user.resetPWD(str(self.otp), self.newPWD)
+        token = user.resetPWD(str(self.otp), self.NewPassword)
         return token

@@ -1,0 +1,12 @@
+<!-- templates/registration/signup.html -->
+{% extends "base.html" %}
+
+{% block title %}Enable MFA{% endblock %}
+
+{% block content %}
+    <p><a href="{% url 'home' %}">Home</a></p>
+    <h1>Scan this code</h1>
+    <p>{{ qr }}</p>
+    <h1>Or enter secret</h1>
+    <p>{{ secret }}</p>
+{% endblock %}
