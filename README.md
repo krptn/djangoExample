@@ -1,5 +1,7 @@
 # Example Krypton Integration with Django
 
+**Note:** for multiple reasons, this example is not production ready. Please do not use this in such an environment but rather take ideas from here on how to integrate Flask and Krypton.
+
 Before running Django please `pip install qrcode`.
 
 Please see our [documentation for details](https://docs.krptn.dev/).
