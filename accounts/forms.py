@@ -7,8 +7,8 @@ class UserCreationForm(forms.Form):
     age = forms.CharField(label = "Age")
     def save(self, commit=True):
         user = users.djangoUser(None)
-        token = user.saveNewUser(pwd=self.Password, name=self.userName)
-        user.setData("Age", self.age)
+        token = user.saveNewUser(pwd=self.cleaned_data["Password"], name=self.cleaned_data["userName"])
+        user.setData("Age", self.cleaned_data["age"])
         return token, user.id
 
 class LoginForm(forms.Form):
@@ -16,15 +16,15 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
     totp = forms.IntegerField(label = "TOTP")
     def save(self, commit=True):
-        user = users.djangoUser(self.userName)
-        token = user.login(pwd=self.password, mfaToken=str(self.totp))
+        user = users.djangoUser(self.cleaned_data["userName"])
+        token = user.login(pwd=self.cleaned_data["userName"], mfaToken=str(self.cleaned_data["totp"]))
         return token, user.id
 
 class PasswordResetForm(forms.Form):
     userName = forms.CharField(label = "User Name")
     otp = forms.IntegerField(label = "OTP")
-    NewPassword = forms.CharField(widget=forms.PasswordInput)
+    newPassword = forms.CharField(widget=forms.PasswordInput)
     def save(self, commit=True):
-        user = users.djangoUser(self.userName)
-        token = user.resetPWD(str(self.otp), self.NewPassword)
+        user = users.djangoUser(self.cleaned_data["userName"])
+        token = user.resetPWD(str(self.cleaned_data["otp"]), self.cleaned_data["newPassword"])
         return token

@@ -13,21 +13,23 @@ def SignUpView(request: HttpRequest):
     if request.method == "GET":
         return render(request, 'registration/signup.html', {'form': forms.UserCreationForm})
     form = forms.UserCreationForm(request.POST)
-    token, Uid = form.save()
-    response = redirect("mfa")
-    response.set_cookie("_KryptonUserID", Uid)
-    response.set_cookie("_KryptonSessionToke", token, 15*60)
-    return response
+    if form.is_valid():
+        token, Uid = form.save()
+        response = redirect("mfa")
+        response.set_cookie("_KryptonUserID", Uid)
+        response.set_cookie("_KryptonSessionToke", token, 15*60)
+        return response
 
 def LoginView(request: HttpRequest):
     if request.method == "GET":
         return render(request, 'registration/login.html', {'form': forms.LoginForm})
     form = forms.LoginForm(request.POST)
-    token, Uid = form.save()
-    response = redirect("/")
-    response.set_cookie("_KryptonUserID", Uid)
-    response.set_cookie("_KryptonSessionToke", token, 15*60)
-    return response
+    if form.is_valid():
+        token, Uid = form.save()
+        response = redirect("/")
+        response.set_cookie("_KryptonUserID", Uid)
+        response.set_cookie("_KryptonSessionToke", token, 15*60)
+        return response
 
 @login_required
 def RecoveryCodeView(request: HttpRequest):
