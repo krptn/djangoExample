@@ -6,7 +6,7 @@
 {% block content %}
     <p><a href="{% url 'home' %}">Home</a></p>
     <h1>Scan this code</h1>
-    <p>{{ qr }}</p>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?data={{ qr }}" alt="QR Code"/>
     <h1>Or enter secret</h1>
     <p>{{ secret }}</p>
 {% endblock %}

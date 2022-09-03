@@ -17,7 +17,7 @@ def SignUpView(request: HttpRequest):
         token, Uid = form.save()
         response = redirect("mfa")
         response.set_cookie("_KryptonUserID", Uid)
-        response.set_cookie("_KryptonSessionToke", token, 15*60)
+        response.set_cookie("_KryptonSessionToken", token, 15*60)
         return response
 
 def LoginView(request: HttpRequest):
@@ -28,14 +28,22 @@ def LoginView(request: HttpRequest):
         token, Uid = form.save()
         response = redirect("/")
         response.set_cookie("_KryptonUserID", Uid)
-        response.set_cookie("_KryptonSessionToke", token, 15*60)
+        response.set_cookie("_KryptonSessionToken", token, 15*60)
         return response
 
 @login_required
 def RecoveryCodeView(request: HttpRequest):
-    return render(request, "register/resetEnable.html", {'codes': request.user.enablePWDReset()})
+    return render(request, "registration/resetEnable.html", {'codes': request.user.enablePWDReset()})
 
 @login_required
 def EnableMFA(request: HttpRequest):
     secret, qr = request.user.enableMFA()
-    return render(request, "register/mfa.html", {"codes": secret, "qr": qr})
+    return render(request, "registration/mfa.html", {"secret": secret.decode(), "qr": qr})
+
+@login_required
+def LogoutView(request: HttpRequest):
+    request.user.logout()
+    response = redirect("/")
+    response.set_cookie("_KryptonUserID", '', 0)
+    response.set_cookie("_KryptonSessionToken", '', 0)
+    return response
