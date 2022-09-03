@@ -3,10 +3,8 @@ from django.shortcuts import render
 # Create your views here.
 # accounts/views.py
 from . import forms
-from django.views import generic
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.http.response import HttpResponse
 from django.http.request import HttpRequest
 
 def SignUpView(request: HttpRequest):
@@ -30,10 +28,6 @@ def LoginView(request: HttpRequest):
         response.set_cookie("_KryptonUserID", Uid)
         response.set_cookie("_KryptonSessionToken", token, 15*60)
         return response
-
-@login_required
-def RecoveryCodeView(request: HttpRequest):
-    return render(request, "registration/resetEnable.html", {'codes': request.user.enablePWDReset()})
 
 @login_required
 def EnableMFA(request: HttpRequest):

@@ -19,12 +19,3 @@ class LoginForm(forms.Form):
         user = users.djangoUser(self.cleaned_data["userName"])
         token = user.login(pwd=self.cleaned_data["userName"], mfaToken=str(self.cleaned_data["totp"]))
         return token, user.id
-
-class PasswordResetForm(forms.Form):
-    userName = forms.CharField(label = "User Name")
-    otp = forms.IntegerField(label = "OTP")
-    newPassword = forms.CharField(widget=forms.PasswordInput)
-    def save(self, commit=True):
-        user = users.djangoUser(self.cleaned_data["userName"])
-        token = user.resetPWD(str(self.cleaned_data["otp"]), self.cleaned_data["newPassword"])
-        return token
