@@ -6,4 +6,10 @@
 
 Please see our [documentation for details](https://docs.krptn.dev/).
 
+Don't forget to install Krptn & Django.
+
+```shell
+pip install krptn django
+```
+
 This is an adapted version of [this tutorial](https://learndjango.com/tutorials/django-login-and-logout-tutorial).
