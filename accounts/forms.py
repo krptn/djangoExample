@@ -17,5 +17,5 @@ class LoginForm(forms.Form):
     totp = forms.IntegerField(label = "TOTP")
     def save(self, commit=True):
         user = users.djangoUser(self.cleaned_data["userName"])
-        token = user.login(pwd=self.cleaned_data["userName"], mfaToken=str(self.cleaned_data["totp"]))
+        token = user.login(pwd=self.cleaned_data["password"], mfaToken=str(self.cleaned_data["totp"]))
         return token, user.id
