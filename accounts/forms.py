@@ -14,7 +14,7 @@ class UserCreationForm(forms.Form):
 class LoginForm(forms.Form):
     userName = forms.CharField(label = "User Name")
     password = forms.CharField(widget=forms.PasswordInput)
-    totp = forms.IntegerField(label = "TOTP")
+    totp = forms.CharField(label = "TOTP")
     def save(self, commit=True):
         user = users.djangoUser(self.cleaned_data["userName"])
         token = user.login(pwd=self.cleaned_data["password"], mfaToken=str(self.cleaned_data["totp"]))
