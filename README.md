@@ -10,6 +10,13 @@ Don't forget to install Krptn & Django.
 
 ```shell
 pip install krptn django
+python manage.py runserver
+```
+
+Or (for Docker):
+
+```shell
+docker build -t django_example . && docker run --rm -p 8000:8000 -it django_example
 ```
 
 This is an adapted version of [this tutorial](https://learndjango.com/tutorials/django-login-and-logout-tutorial).
