@@ -9,7 +9,7 @@ Please see our [documentation for details](https://docs.krptn.dev/).
 Don't forget to install Krptn & Django.
 
 ```shell
-pip install krptn django
+pip install -r requirements.txt
 python manage.py runserver
 ```
 
