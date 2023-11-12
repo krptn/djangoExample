@@ -1,6 +1,6 @@
 # Example Krptn Integration with Django
 
-**Note:** for multiple reasons, this example is not production ready. Please do not use this in such an environment but rather take ideas from here on how to integrate Flask and Krptn.
+**Note:** for multiple reasons, this example is not production ready. Please do not use this in such an environment but rather take ideas from here on how to integrate Django and Krptn.
 
 **Note:** in this example, the Django Admin page is not configured to work with Krptn.
 
